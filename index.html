@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WissenWelle — Das deutsche Magazin-Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Spectral:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#F2F6F8;--white:#FFF;--card:#FFF;
+  --ink:#0E2229;--mid:#163040;
+  --border:#D8E5EA;--border2:#B8D0D8;
+  --teal:#0A7C78;--teal2:#065A56;
+  --teal-lt:#E0F5F4;--teal-mid:#5BBBB8;
+  --rose:#D4456C;--rose2:#B02A50;
+  --rose-lt:#FDE8EF;
+  --gold:#C89010;--sky:#4A9FBF;
+  --muted:#4A6878;--light:#88A8B8;
+  --warm:#E8F0F4;--warm2:#DCE8EE;
+}
+body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+
+/* ── TOPBAR ── */
+.topbar{background:var(--teal);padding:8px 0}
+.tb-inner{max-width:1360px;margin:0 auto;padding:0 36px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.tb-l{font-size:11px;color:rgba(255,255,255,0.8);letter-spacing:0.5px;font-weight:600;display:flex;align-items:center;gap:8px}
+.tb-wave{font-size:14px}
+.tb-r{display:flex;gap:18px}
+.tb-r a{font-size:10px;color:rgba(255,255,255,0.6);text-decoration:none;letter-spacing:2px;text-transform:uppercase;font-weight:700;transition:color .2s}
+.tb-r a:hover{color:#fff}
+
+/* ── HEADER ── */
+header{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:200;box-shadow:0 2px 20px rgba(10,124,120,0.06)}
+.hdr{max-width:1360px;margin:0 auto;padding:0 36px;display:flex;align-items:center;height:72px;justify-content:space-between;gap:16px}
+.logo{text-decoration:none;display:flex;align-items:center;gap:14px}
+.logo-mark{width:46px;height:46px;background:linear-gradient(135deg,var(--teal),var(--sky));border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Spectral',serif;font-size:20px;font-weight:700;color:#fff;font-style:italic;flex-shrink:0}
+.logo-text{}
+.logo-name{font-family:'Spectral',serif;font-size:28px;font-weight:700;color:var(--ink);letter-spacing:-0.5px;line-height:1}
+.logo-name .welle{color:var(--teal);font-style:italic}
+.logo-sub{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);margin-top:3px;font-weight:600}
+.hdr-nav{display:flex;align-items:center;gap:2px}
+.hdr-nav a{padding:7px 13px;color:var(--muted);text-decoration:none;font-size:12px;font-weight:700;transition:all .2s;border-radius:6px;white-space:nowrap}
+.hdr-nav a:hover{background:var(--teal-lt);color:var(--teal)}
+.hdr-date{font-size:11px;color:var(--muted);font-weight:600;padding:7px 14px;background:var(--warm);border:1px solid var(--border);border-radius:6px;white-space:nowrap}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:none;border:none}
+.hamburger span{display:block;width:24px;height:2px;background:var(--muted);transition:.3s}
+.mobile-nav{display:none;background:var(--white);border-top:1px solid var(--border);padding:16px 36px;flex-direction:column;gap:2px}
+.mobile-nav a{display:block;padding:11px 0;color:var(--muted);text-decoration:none;font-size:14px;font-weight:700;border-bottom:1px solid var(--border);transition:color .2s}
+.mobile-nav a:hover{color:var(--teal)}
+.mobile-nav.open{display:flex}
+
+/* ── MOSAIC HERO ── */
+.hero-mosaic{max-width:1360px;margin:0 auto;padding:28px 36px 0;display:grid;grid-template-columns:1.8fr 1fr 1fr;grid-template-rows:320px 220px;gap:6px}
+.tile{position:relative;overflow:hidden;cursor:pointer;border-radius:6px}
+.tile-bg{position:absolute;inset:0;transition:transform .6s}
+.tile:hover .tile-bg{transform:scale(1.06)}
+.tile-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,34,41,0.85) 0%,rgba(10,34,41,0.1) 60%)}
+.tile-content{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:22px}
+.tile-cat{display:inline-block;font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;padding:4px 12px;border-radius:3px;margin-bottom:8px;width:fit-content}
+.tile-cat-teal{background:var(--teal);color:#fff}
+.tile-cat-rose{background:var(--rose);color:#fff}
+.tile-cat-gold{background:var(--gold);color:#fff}
+.tile-cat-sky{background:var(--sky);color:#fff}
+.tile-title{font-family:'Spectral',serif;font-size:24px;font-weight:700;color:#fff;line-height:1.2;margin-bottom:8px}
+.tile-title-sm{font-size:17px}
+.tile-meta{display:flex;align-items:center;gap:8px;font-size:11px;color:rgba(255,255,255,0.5);font-weight:600}
+.tile-meta strong{color:rgba(255,255,255,0.85)}
+.tile-main{grid-column:1;grid-row:1/3}
+.tile-main .tile-title{font-size:34px}
+.tile-tr{grid-column:2;grid-row:1}
+.tile-mr{grid-column:3;grid-row:1}
+.tile-bl{grid-column:2;grid-row:2}
+.tile-br{grid-column:3;grid-row:2}
+.bg-t{background:linear-gradient(160deg,var(--teal2),#0A2229)}.bg-r{background:linear-gradient(160deg,var(--rose2),#3A0A18)}.bg-s{background:linear-gradient(160deg,#0E2A3A,#062040)}.bg-g{background:linear-gradient(160deg,#2A1800,#1A0E00)}.bg-p{background:linear-gradient(160deg,#1A0A2A,#0A0415)}
+.hero-empty{max-width:1360px;margin:24px auto 0;padding:0 36px;display:none}
+.hero-empty-inner{background:var(--white);border:1px dashed var(--border2);border-radius:6px;padding:72px 40px;text-align:center}
+.hero-empty-inner h3{font-family:'Spectral',serif;font-size:32px;color:var(--ink);margin-bottom:8px;font-weight:700}
+.hero-empty-inner p{color:var(--muted);font-size:14px}
+
+/* ── CONTENT ── */
+.main{max-width:1360px;margin:40px auto;padding:0 36px;display:grid;grid-template-columns:1fr 300px;gap:40px}
+.sec-hd{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.sec-hd-pill{background:var(--teal);color:#fff;font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;padding:5px 14px;border-radius:100px}
+.sec-hd-line{flex:1;height:1px;background:var(--border)}
+.sec-hd-count{font-size:11px;color:var(--muted);font-weight:700}
+
+/* ── CARD GRID ── */
+.card-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.post-card{background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden;cursor:pointer;transition:all .3s;display:flex;flex-direction:column}
+.post-card:hover{box-shadow:0 14px 40px rgba(10,124,120,0.12);border-color:var(--teal-mid);transform:translateY(-3px)}
+.post-card:hover .pc-img-bg{transform:scale(1.06)}
+.pc-img{position:relative;height:170px;overflow:hidden;flex-shrink:0}
+.pc-img-bg{width:100%;height:100%;position:absolute;inset:0;transition:transform .5s}
+.pc-cat-chip{position:absolute;top:12px;left:12px;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border-radius:100px;backdrop-filter:blur(8px)}
+.chip-teal{background:rgba(10,124,120,0.85);color:#fff}
+.chip-rose{background:rgba(212,69,108,0.85);color:#fff}
+.chip-sky{background:rgba(74,159,191,0.85);color:#fff}
+.chip-gold{background:rgba(200,144,16,0.85);color:#fff}
+.pc-body{padding:16px 18px;flex:1;display:flex;flex-direction:column;justify-content:space-between}
+.pc-meta{display:flex;align-items:center;gap:6px;margin-bottom:7px;font-size:11px;color:var(--muted);font-weight:600;flex-wrap:wrap}
+.pc-cat-text{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--teal)}
+.pc-sep{width:3px;height:3px;border-radius:50%;background:var(--light)}
+.pc-title{font-family:'Spectral',serif;font-size:18px;font-weight:700;color:var(--ink);line-height:1.25;margin-bottom:7px;transition:color .2s}
+.post-card:hover .pc-title{color:var(--teal)}
+.pc-exc{font-size:12px;line-height:1.6;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:10px;font-weight:300}
+.pc-foot{display:flex;align-items:center;justify-content:space-between;padding-top:9px;border-top:1px solid var(--border)}
+.pc-author{font-size:11px;font-weight:700;color:var(--mid)}
+.pc-read{font-size:11px;font-weight:700;color:var(--teal);text-decoration:none;display:flex;align-items:center;gap:4px;transition:gap .2s}
+.post-card:hover .pc-read{gap:8px}
+.empty-state{text-align:center;padding:72px 40px;background:var(--card);border:1px solid var(--border);border-radius:10px;grid-column:1/-1}
+.empty-state h3{font-family:'Spectral',serif;font-size:30px;color:var(--ink);margin-bottom:8px}
+.empty-state p{color:var(--muted);font-size:14px}
+.bg1{background:linear-gradient(135deg,#0A2229,#163040)}.bg2{background:linear-gradient(135deg,var(--teal2),#0A1E1C)}.bg3{background:linear-gradient(135deg,var(--rose2),#2A0A14)}.bg4{background:linear-gradient(135deg,#1A0A2A,#0A0415)}.bg5{background:linear-gradient(135deg,#0E2A3A,#052040)}.bg6{background:linear-gradient(135deg,#2A1800,#1A0E00)}.bg7{background:linear-gradient(135deg,#1A2A00,#0A1400)}.bg8{background:linear-gradient(135deg,#2A001A,#14000A)}
+
+/* ── SIDEBAR ── */
+.sidebar{display:flex;flex-direction:column;gap:16px}
+.widget{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.w-head{padding:13px 18px;border-bottom:1px solid var(--border);background:var(--warm);display:flex;align-items:center;gap:8px}
+.w-pill{background:var(--teal);color:#fff;font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:3px 10px;border-radius:100px}
+.w-title{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ink)}
+.w-body{padding:14px 18px}
+.wi{padding:11px 0;border-bottom:1px solid var(--border);cursor:pointer;transition:padding .15s}
+.wi:last-child{border-bottom:none;padding-bottom:0}.wi:first-child{padding-top:0}
+.wi:hover{padding-left:5px}
+.wi-type{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--teal);margin-bottom:3px}
+.wi-title{font-family:'Spectral',serif;font-size:16px;color:var(--ink);line-height:1.25;text-decoration:none;display:block;font-weight:600}
+.wi-title:hover{color:var(--teal)}
+.wi-meta{font-size:11px;color:var(--light);margin-top:2px}
+.brand-box{background:linear-gradient(135deg,var(--teal2),#0E3A40);padding:26px;border-radius:12px;overflow:hidden;position:relative}
+.brand-box::after{content:'~';position:absolute;right:-10px;bottom:-20px;font-family:'Spectral',serif;font-size:120px;font-weight:700;color:rgba(255,255,255,0.05);line-height:1;font-style:italic}
+.bb-mark{width:36px;height:36px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Spectral',serif;font-size:16px;font-weight:700;color:#fff;font-style:italic;margin-bottom:12px}
+.bb-name{font-family:'Spectral',serif;font-size:22px;font-weight:700;color:#fff;margin-bottom:6px;letter-spacing:-0.3px}
+.bb-name span{color:var(--teal-mid);font-style:italic}
+.bb-text{font-size:12px;color:rgba(255,255,255,0.45);line-height:1.65;font-weight:300;position:relative}
+.cat-cloud{display:flex;flex-wrap:wrap;gap:6px}
+.cat-cloud-item{background:var(--warm2);border:1px solid var(--border2);color:var(--muted);font-size:11px;font-weight:700;padding:6px 12px;border-radius:100px;text-decoration:none;transition:all .2s}
+.cat-cloud-item:hover{background:var(--teal);color:#fff;border-color:var(--teal)}
+
+/* ── FOOTER ── */
+footer{background:var(--ink);margin-top:56px}
+.footer-inner{max-width:1360px;margin:0 auto;padding:48px 36px;display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;gap:44px}
+.footer-logo{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.footer-logo-mark{width:38px;height:38px;background:linear-gradient(135deg,var(--teal),var(--sky));border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Spectral',serif;font-size:16px;font-weight:700;color:#fff;font-style:italic}
+.footer-logo-name{font-family:'Spectral',serif;font-size:24px;font-weight:700;color:#fff;letter-spacing:-0.3px}
+.footer-logo-name span{color:var(--teal-mid);font-style:italic}
+.footer-brand p{font-size:13px;line-height:1.8;color:rgba(255,255,255,0.3);font-weight:300}
+.footer-col h4{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:14px}
+.footer-col a{display:block;color:rgba(255,255,255,0.35);text-decoration:none;font-size:13px;margin-bottom:8px;font-weight:300;transition:color .2s}
+.footer-col a:hover{color:var(--teal-mid)}
+.footer-btm{border-top:1px solid rgba(255,255,255,0.06);max-width:1360px;margin:0 auto;padding:14px 36px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:11px;color:rgba(255,255,255,0.2)}
+.footer-btm a{color:rgba(255,255,255,0.2);text-decoration:none;margin-left:14px;transition:color .2s}
+.footer-btm a:hover{color:#fff}
+.admin-link{position:fixed;bottom:20px;right:20px;background:var(--teal);color:#fff;padding:10px 20px;font-size:10px;text-decoration:none;opacity:0;transition:opacity .3s;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border-radius:100px;box-shadow:0 4px 14px rgba(10,124,120,0.3)}
+body:hover .admin-link{opacity:0.55}
+.admin-link:hover{opacity:1!important}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1100px){
+  .hero-mosaic{grid-template-columns:1.5fr 1fr;grid-template-rows:300px 200px}
+  .tile-main{grid-column:1;grid-row:1/3}
+  .tile-tr{grid-column:2;grid-row:1}
+  .tile-mr,.tile-bl,.tile-br{display:none}
+  .card-grid{grid-template-columns:1fr}
+  .main{grid-template-columns:1fr}
+  .sidebar{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .footer-inner{grid-template-columns:1fr 1fr;gap:28px}
+}
+@media(max-width:768px){
+  .tb-r{display:none}
+  .hdr-nav{display:none}
+  .hdr-date{display:none}
+  .hamburger{display:flex}
+  .hdr{height:62px;padding:0 20px}
+  .hero-mosaic{grid-template-columns:1fr;grid-template-rows:auto;gap:6px;padding:16px 20px 0}
+  .tile-main{grid-column:auto;grid-row:auto;height:260px}
+  .tile-tr{grid-column:auto;grid-row:auto;height:180px;display:block}
+  .main{padding:0 20px;margin:28px auto}
+  .sidebar{grid-template-columns:1fr}
+  .footer-inner{grid-template-columns:1fr;gap:22px;padding:32px 20px}
+  .footer-btm{padding:12px 20px}
+}
+@media(max-width:480px){
+  .topbar{display:none}
+  .tile-main .tile-title{font-size:24px}
+  .main{padding:0 14px}
+  .hero-mosaic{padding:12px 14px 0}
+}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="tb-inner">
+  <div class="tb-l"><span class="tb-wave">〜</span>WissenWelle — Das deutsche Magazin-Blog</div>
+  <div class="tb-r"><a href="#">Newsletter</a><a href="#">Archiv</a><a href="#">Impressum</a></div>
+</div></div>
+
+<header>
+  <div class="hdr">
+    <a href="index.html" class="logo">
+      <div class="logo-mark">W</div>
+      <div class="logo-text">
+        <div class="logo-name">Wissen<span class="welle">Welle</span></div>
+        <div class="logo-sub">Politik · Kultur · Wissen · Leben · Technik</div>
+      </div>
+    </a>
+    <nav class="hdr-nav">
+      <a href="index.html">Alle</a><a href="index.html">Politik</a><a href="index.html">Wirtschaft</a>
+      <a href="index.html">Gesellschaft</a><a href="index.html">Kultur</a><a href="index.html">Technik</a>
+      <a href="index.html">Wissen</a><a href="index.html">Sport</a>
+    </nav>
+    <div class="hdr-date" id="hdr-date"></div>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Menü">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="index.html" onclick="toggleMenu()">Alle Beiträge</a>
+    <a href="index.html" onclick="toggleMenu()">Politik</a><a href="index.html" onclick="toggleMenu()">Wirtschaft</a>
+    <a href="index.html" onclick="toggleMenu()">Gesellschaft</a><a href="index.html" onclick="toggleMenu()">Kultur</a>
+    <a href="index.html" onclick="toggleMenu()">Technik</a><a href="index.html" onclick="toggleMenu()">Wissen</a>
+    <a href="index.html" onclick="toggleMenu()">Sport</a><a href="index.html" onclick="toggleMenu()">Lifestyle</a>
+  </div>
+</header>
+
+<div id="hero-mosaic" class="hero-mosaic" style="display:none">
+  <div class="tile tile-main bg-t" id="tile-main" onclick=""></div>
+  <div class="tile tile-tr bg-r" id="tile-tr" onclick=""></div>
+  <div class="tile tile-mr bg-s" id="tile-mr" onclick=""></div>
+  <div class="tile tile-bl bg-g" id="tile-bl" onclick=""></div>
+  <div class="tile tile-br bg-p" id="tile-br" onclick=""></div>
+</div>
+<div class="hero-empty" id="hero-empty">
+  <div class="hero-empty-inner"><h3>Noch keine Artikel</h3><p>Erstelle deinen ersten Beitrag im Admin-Bereich.</p></div>
+</div>
+
+<div class="main">
+  <div>
+    <div class="sec-hd"><div class="sec-hd-pill">Alle Beiträge</div><div class="sec-hd-line"></div><div class="sec-hd-count" id="sec-count">0 Beiträge</div></div>
+    <div class="card-grid" id="posts-list">
+      <div class="empty-state"><h3>Noch keine Artikel</h3><p>Erstelle deinen ersten Beitrag im Admin-Bereich.</p></div>
+    </div>
+  </div>
+  <aside class="sidebar">
+    <div class="brand-box"><div class="bb-mark">W</div><div class="bb-name">Wissen<span>Welle</span></div><div class="bb-text">Das deutsche Magazin-Blog für alle Themen — täglich neue Artikel zu Politik, Kultur, Wissen, Technik und mehr.</div></div>
+    <div class="widget"><div class="w-head"><div class="w-pill">NEU</div><div class="w-title">Neueste Beiträge</div></div><div class="w-body"><div id="sidebar-recent"></div></div></div>
+    <div class="widget"><div class="w-head"><div class="w-pill">ALLE</div><div class="w-title">Kategorien</div></div><div class="w-body"><div class="cat-cloud">
+      <a href="index.html" class="cat-cloud-item">Politik</a><a href="index.html" class="cat-cloud-item">Wirtschaft</a>
+      <a href="index.html" class="cat-cloud-item">Gesellschaft</a><a href="index.html" class="cat-cloud-item">Kultur</a>
+      <a href="index.html" class="cat-cloud-item">Technik</a><a href="index.html" class="cat-cloud-item">Wissen</a>
+      <a href="index.html" class="cat-cloud-item">Lifestyle</a><a href="index.html" class="cat-cloud-item">Sport</a>
+      <a href="index.html" class="cat-cloud-item">Reise</a><a href="index.html" class="cat-cloud-item">Gesundheit</a>
+    </div></div></div>
+  </aside>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo"><div class="footer-logo-mark">W</div><div class="footer-logo-name">Wissen<span>Welle</span></div></div>
+      <p class="footer-brand">WissenWelle ist das deutschsprachige Magazin-Blog für alle Themen. Täglich neue Beiträge zu Politik, Wirtschaft, Gesellschaft, Kultur, Technik, Wissen und mehr.</p>
+    </div>
+    <div class="footer-col"><h4>Themen</h4><a href="#">Politik</a><a href="#">Wirtschaft</a><a href="#">Gesellschaft</a><a href="#">Kultur</a><a href="#">Technik</a></div>
+    <div class="footer-col"><h4>Service</h4><a href="#">Newsletter</a><a href="#">Archiv</a><a href="#">RSS</a></div>
+    <div class="footer-col"><h4>Info</h4><a href="#">Über uns</a><a href="#">Impressum</a><a href="#">Datenschutz</a><a href="#">Kontakt</a></div>
+  </div>
+  <div class="footer-btm"><span>&copy; 2026 WissenWelle</span><div><a href="#">Impressum</a><a href="#">Datenschutz</a></div></div>
+</footer>
+<a href="admin.html" class="admin-link">⚙ Admin</a>
+
+<script>
+// Constants
+const GIST_ID = '42ea11087f40fdba423f8eb0f575ac96';
+const SITE_NAME = 'wissenwelle';
+const RAW_URL = `https://gist.githubusercontent.com/Hamzamain-spec/${GIST_ID}/raw/posts.json`;
+
+function toggleMenu(){document.getElementById('mobile-nav').classList.toggle('open');}
+const d=new Date(),days=['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'],months=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+document.getElementById('hdr-date').textContent=days[d.getDay()]+', '+d.getDate()+'. '+months[d.getMonth()]+' '+d.getFullYear();
+
+const catChips=['chip-teal','chip-rose','chip-sky','chip-gold','chip-teal','chip-rose','chip-sky','chip-gold'];
+const tileCats=['tile-cat-teal','tile-cat-rose','tile-cat-gold','tile-cat-sky','tile-cat-teal'];
+const bgs=['bg1','bg2','bg3','bg4','bg5','bg6','bg7','bg8'];
+
+async function loadPosts() {
+  try {
+    const response = await fetch(RAW_URL);
+    const allPosts = await response.json();
+    
+    // Filter posts by site name
+    const posts = Array.isArray(allPosts) 
+      ? allPosts.filter(p => p.site === SITE_NAME).reverse()
+      : [];
+    
+    document.getElementById('sec-count').textContent = posts.length + ' Beiträge';
+    
+    if (!posts.length) {
+      document.getElementById('hero-empty').style.display = 'block';
+      document.getElementById('hero-mosaic').style.display = 'none';
+      document.getElementById('posts-list').innerHTML = '<div class="empty-state"><h3>Noch keine Artikel</h3><p>Erstelle deinen ersten Beitrag im Admin-Bereich.</p></div>';
+      return;
+    }
+    
+    document.getElementById('hero-mosaic').style.display = 'grid';
+    document.getElementById('hero-empty').style.display = 'none';
+    
+    // Mosaic tiles (first 5 posts)
+    const tileIds = ['tile-main','tile-tr','tile-mr','tile-bl','tile-br'];
+    tileIds.forEach((tid, i) => {
+      const p = posts[i];
+      if (!p) return;
+      const el = document.getElementById(tid);
+      el.onclick = () => location.href = 'post.html?id=' + p.id;
+      const isBig = tid === 'tile-main';
+      el.innerHTML = `<div class="tile-bg ${bgs[i % bgs.length]}"></div>
+        <div class="tile-overlay"></div>
+        <div class="tile-content">
+          <div class="tile-cat ${tileCats[i % tileCats.length]}">${p.category || 'Allgemein'}</div>
+          <div class="tile-title ${isBig ? '' : 'tile-title-sm'}">${p.title}</div>
+          <div class="tile-meta"><strong>${p.author || 'Redaktion'}</strong><span>·</span><span>${new Date(p.date).toLocaleDateString('de-DE')}</span></div>
+        </div>`;
+    });
+    
+    // Card grid
+    const pl = document.getElementById('posts-list');
+    pl.innerHTML = '';
+    posts.forEach((p, i) => {
+      const date = new Date(p.date).toLocaleDateString('de-DE', {day:'numeric', month:'long', year:'numeric'});
+      const exc = p.content.replace(/<[^>]+>/g, '').substring(0, 90) + '...';
+      pl.innerHTML += `<div class="post-card" onclick="location.href='post.html?id=${p.id}'">
+        <div class="pc-img">
+          <div class="pc-img-bg ${bgs[i % bgs.length]}"></div>
+          <div class="pc-cat-chip ${catChips[i % catChips.length]}">${p.category || 'Allgemein'}</div>
+        </div>
+        <div class="pc-body">
+          <div>
+            <div class="pc-meta">
+              <span class="pc-cat-text">${p.category || 'Allgemein'}</span>
+              <div class="pc-sep"></div>
+              <span>${date}</span>
+            </div>
+            <div class="pc-title">${p.title}</div>
+            <div class="pc-exc">${exc}</div>
+          </div>
+          <div class="pc-foot">
+            <span class="pc-author">${p.author || 'Redaktion'}</span>
+            <a class="pc-read" href="post.html?id=${p.id}">Lesen →</a>
+          </div>
+        </div>
+      </div>`;
+    });
+    
+    // Sidebar recent posts
+    const sr = document.getElementById('sidebar-recent');
+    sr.innerHTML = '';
+    posts.slice(0, 5).forEach(p => {
+      sr.innerHTML += `<div class="wi" onclick="location.href='post.html?id=${p.id}'">
+        <div class="wi-type">${p.category || 'Allgemein'}</div>
+        <a class="wi-title" href="post.html?id=${p.id}">${p.title}</a>
+        <div class="wi-meta">${p.author || 'Redaktion'} · ${new Date(p.date).toLocaleDateString('de-DE')}</div>
+      </div>`;
+    });
+    
+  } catch (e) {
+    console.error('Error loading posts:', e);
+    document.getElementById('hero-empty').style.display = 'block';
+  }
+}
+
+// Load posts on page load
+loadPosts();
+
+// Auto-refresh every 30 seconds
+setInterval(loadPosts, 30000);
+</script>
+</body>
+</html>
