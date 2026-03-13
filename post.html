@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Artikel — WissenWelle</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Spectral:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#F2F6F8;--white:#FFF;--card:#FFF;--ink:#0E2229;--mid:#163040;--border:#D8E5EA;--teal:#0A7C78;--teal2:#065A56;--teal-lt:#E0F5F4;--teal-mid:#5BBBB8;--rose:#D4456C;--muted:#4A6878;--light:#88A8B8;--warm:#E8F0F4;--warm2:#DCE8EE}
+body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+header{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(10,124,120,0.06)}
+.hdr-inner{max-width:1360px;margin:0 auto;padding:0 36px;height:68px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.logo{text-decoration:none;display:flex;align-items:center;gap:12px}
+.logo-mark{width:40px;height:40px;background:linear-gradient(135deg,var(--teal),#4A9FBF);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Spectral',serif;font-size:17px;font-weight:700;color:#fff;font-style:italic;flex-shrink:0}
+.logo-name{font-family:'Spectral',serif;font-size:24px;font-weight:700;color:var(--ink);letter-spacing:-0.3px}
+.logo-name span{color:var(--teal);font-style:italic}
+nav a{padding:6px 12px;color:var(--muted);text-decoration:none;font-size:12px;font-weight:700;transition:all .2s;border-radius:6px}
+nav a:hover{background:var(--teal-lt);color:var(--teal)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:none;border:none}
+.hamburger span{display:block;width:24px;height:2px;background:var(--muted)}
+.mobile-nav{display:none;background:var(--white);border-top:1px solid var(--border);padding:16px 36px;flex-direction:column;gap:2px}
+.mobile-nav a{display:block;padding:11px 0;color:var(--muted);text-decoration:none;font-size:14px;font-weight:700;border-bottom:1px solid var(--border);transition:color .2s}
+.mobile-nav a:hover{color:var(--teal)}
+.mobile-nav.open{display:flex}
+/* HERO */
+.post-hero{background:var(--ink);border-bottom:3px solid var(--teal)}
+.ph-inner{max-width:1360px;margin:0 auto;padding:60px 36px;display:grid;grid-template-columns:1fr 380px;gap:60px;align-items:center}
+.ph-breadcrumb{display:flex;gap:6px;font-size:11px;color:rgba(255,255,255,0.2);margin-bottom:16px;font-weight:600;flex-wrap:wrap}
+.ph-breadcrumb a{color:rgba(255,255,255,0.2);text-decoration:none;transition:color .2s}
+.ph-breadcrumb a:hover{color:var(--teal-mid)}
+.ph-chip{display:inline-flex;align-items:center;gap:7px;background:var(--teal);color:#fff;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 14px;border-radius:100px;margin-bottom:18px}
+.ph-title{font-family:'Spectral',serif;font-size:52px;font-weight:700;color:#fff;line-height:1.02;margin-bottom:22px;letter-spacing:-0.5px}
+.ph-meta{display:flex;align-items:center;gap:14px;font-size:12px;color:rgba(255,255,255,0.3);flex-wrap:wrap}
+.ph-av{width:36px;height:36px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0}
+.ph-meta strong{color:rgba(255,255,255,0.8);font-weight:700}
+.ph-visual{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:10px;min-height:260px;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+.ph-vis-letter{font-family:'Spectral',serif;font-size:160px;font-weight:700;color:rgba(255,255,255,0.05);line-height:1;font-style:italic}
+.ph-vis-teal{position:absolute;inset:0;background:linear-gradient(135deg,rgba(10,124,120,0.15),transparent)}
+/* LAYOUT */
+.layout{max-width:1240px;margin:48px auto;padding:0 36px;display:grid;grid-template-columns:1fr 270px;gap:36px}
+.main-col{background:var(--card);padding:52px 56px;border:1px solid var(--border);border-radius:10px;border-top:3px solid var(--teal)}
+.back-btn{display:inline-flex;align-items:center;gap:7px;background:var(--teal-lt);border:1px solid rgba(10,124,120,0.2);color:var(--teal);text-decoration:none;font-size:11px;font-weight:700;padding:8px 16px;margin-bottom:36px;letter-spacing:1px;text-transform:uppercase;border-radius:100px;transition:all .2s}
+.back-btn:hover{background:var(--teal);color:#fff}
+.article-body{font-size:18px;line-height:1.9;color:var(--mid);font-weight:300}
+.article-body p{margin-bottom:26px}
+.article-body h2{font-family:'Spectral',serif;font-size:32px;font-weight:700;color:var(--ink);margin:50px 0 14px;position:relative;padding-left:16px}
+.article-body h2::before{content:'';position:absolute;left:0;top:4px;bottom:4px;width:3px;background:var(--teal);border-radius:2px}
+.article-body h3{font-family:'Spectral',serif;font-size:22px;font-weight:700;color:var(--ink);margin:28px 0 10px}
+.article-body a{color:var(--teal);font-weight:600;text-decoration:none;border-bottom:1px solid rgba(10,124,120,0.3);transition:all .2s}
+.article-body a:hover{color:var(--teal2);border-color:var(--teal2)}
+.article-body ul,.article-body ol{padding-left:26px;margin-bottom:22px}
+.article-body li{margin-bottom:8px;line-height:1.8}
+.article-body strong{font-weight:700;color:var(--ink)}
+blockquote{background:var(--teal-lt);border-left:3px solid var(--teal);padding:20px 24px;margin:32px 0;border-radius:0 8px 8px 0}
+blockquote p{font-family:'Spectral',serif;font-size:20px;font-style:italic;color:var(--ink);line-height:1.55;margin-bottom:0}
+.sidebar{display:flex;flex-direction:column;gap:14px}
+.widget{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.wh{padding:12px 18px;border-bottom:1px solid var(--border);background:var(--warm);display:flex;align-items:center;gap:8px}
+.wh-pill{background:var(--teal);color:#fff;font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:3px 9px;border-radius:100px}
+.wh-title{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ink)}
+.wb{padding:14px 18px}
+.ri{padding:11px 0;border-bottom:1px solid var(--border);cursor:pointer;transition:padding .15s}
+.ri:last-child{border-bottom:none;padding-bottom:0}.ri:first-child{padding-top:0}
+.ri:hover{padding-left:5px}
+.ri-type{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--teal);margin-bottom:3px}
+.ri-title{font-family:'Spectral',serif;font-size:16px;color:var(--ink);line-height:1.25;text-decoration:none;display:block;font-weight:600}
+.ri-title:hover{color:var(--teal)}
+.ri-meta{font-size:11px;color:var(--light);margin-top:2px}
+.share-box{background:linear-gradient(135deg,var(--teal2),#0E3A40);padding:24px;border-radius:12px;text-align:center}
+.sb-title{font-family:'Spectral',serif;font-size:20px;font-weight:700;color:#fff;margin-bottom:6px}
+.sb-text{font-size:12px;color:rgba(255,255,255,0.4);line-height:1.6;margin-bottom:16px;font-weight:300}
+.sb-btn{display:block;background:var(--teal-mid);color:#fff;padding:11px;border-radius:8px;font-size:11px;font-weight:700;text-decoration:none;text-align:center;transition:opacity .2s}
+.sb-btn:hover{opacity:0.85}
+.not-found{text-align:center;padding:80px;color:var(--muted);grid-column:1/-1}
+footer{background:var(--ink);margin-top:52px;text-align:center;padding:24px;font-size:12px;color:rgba(255,255,255,0.25)}
+footer a{color:rgba(255,255,255,0.25);text-decoration:none;margin:0 10px;transition:color .2s}
+footer a:hover{color:var(--teal-mid)}
+.fl{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:6px}
+.fl-mark{width:30px;height:30px;background:var(--teal);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-family:'Spectral',serif;font-size:13px;font-weight:700;color:#fff;font-style:italic}
+.fl-name{font-family:'Spectral',serif;font-size:22px;font-weight:700;color:#fff}
+.fl-name span{color:var(--teal-mid);font-style:italic}
+@media(max-width:1024px){.layout{grid-template-columns:1fr}.sidebar{display:none}.ph-inner{grid-template-columns:1fr;gap:24px}.ph-visual{display:none}}
+@media(max-width:768px){.ph-inner{padding:40px 24px}.ph-title{font-size:34px}.main-col{padding:36px 24px;border-radius:0}.hdr-inner nav{display:none}.hamburger{display:flex}.hdr-inner{padding:0 20px}}
+@media(max-width:480px){.ph-title{font-size:26px}.main-col{padding:24px 18px}.article-body{font-size:16px}.layout{padding:0 14px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="hdr-inner">
+    <a href="index.html" class="logo"><div class="logo-mark">W</div><div class="logo-name">Wissen<span>Welle</span></div></a>
+    <nav><a href="index.html">← Start</a><a href="index.html">Politik</a><a href="index.html">Kultur</a><a href="index.html">Technik</a><a href="index.html">Wissen</a></nav>
+    <button class="hamburger" onclick="document.getElementById('mn').classList.toggle('open')"><span></span><span></span><span></span></button>
+  </div>
+  <div class="mobile-nav" id="mn"><a href="index.html">← Alle Artikel</a><a href="index.html">Politik</a><a href="index.html">Wirtschaft</a><a href="index.html">Kultur</a><a href="index.html">Technik</a></div>
+</header>
+<div id="post-hero" class="post-hero" style="display:none">
+  <div class="ph-inner">
+    <div>
+      <div class="ph-breadcrumb"><a href="index.html">Start</a><span>/</span><span id="ph-cat-bc">Allgemein</span></div>
+      <div class="ph-chip" id="ph-chip">Allgemein</div>
+      <div class="ph-title" id="ph-title"></div>
+      <div class="ph-meta"><div class="ph-av" id="ph-av">R</div><strong id="ph-author">Redaktion</strong><span>· <span id="ph-date"></span></span><span>· <span id="ph-read">5 Min.</span></span></div>
+    </div>
+    <div class="ph-visual"><div class="ph-vis-teal"></div><div class="ph-vis-letter" id="ph-letter">W</div></div>
+  </div>
+</div>
+<div class="layout">
+  <div class="main-col">
+    <a href="index.html" class="back-btn">← Alle Artikel</a>
+    <div id="article-body" class="article-body"></div>
+    <div id="not-found" class="not-found" style="display:none"><h2 style="font-family:'Spectral',serif;font-size:34px">Artikel nicht gefunden.</h2></div>
+  </div>
+  <aside class="sidebar">
+    <div class="share-box"><div class="sb-title">Artikel teilen</div><div class="sb-text">Teile diesen Artikel mit deinem Netzwerk!</div><a href="index.html" class="sb-btn">🔗 Link kopieren</a></div>
+    <div class="widget"><div class="wh"><div class="wh-pill">NEU</div><div class="wh-title">Weitere Artikel</div></div><div class="wb"><div id="recent-posts"></div></div></div>
+  </aside>
+</div>
+<footer>
+  <div class="fl"><span class="fl-mark">W</span><span class="fl-name">Wissen<span>Welle</span></span></div>
+  <p>&copy; 2026 WissenWelle &nbsp;|&nbsp;<a href="#">Impressum</a>&nbsp;|&nbsp;<a href="#">Datenschutz</a></p>
+</footer>
+<script>
+// Constants
+const GIST_ID = '42ea11087f40fdba423f8eb0f575ac96';
+const SITE_NAME = 'wissenwelle';
+const RAW_URL = `https://gist.githubusercontent.com/Hamzamain-spec/${GIST_ID}/raw/posts.json`;
+
+const params = new URLSearchParams(window.location.search);
+const id = params.get('id');
+
+async function loadPost() {
+  try {
+    const response = await fetch(RAW_URL);
+    const allPosts = await response.json();
+    
+    // Filter posts by site name
+    const sitePosts = Array.isArray(allPosts) 
+      ? allPosts.filter(p => p.site === SITE_NAME)
+      : [];
+    
+    const post = sitePosts.find(p => p.id == id);
+    
+    if (post) {
+      document.title = post.title + ' — WissenWelle';
+      document.getElementById('ph-title').textContent = post.title;
+      document.getElementById('ph-chip').textContent = post.category || 'Allgemein';
+      document.getElementById('ph-cat-bc').textContent = post.category || 'Allgemein';
+      document.getElementById('ph-author').textContent = post.author || 'Redaktion';
+      document.getElementById('ph-av').textContent = (post.author || 'R').charAt(0).toUpperCase();
+      document.getElementById('ph-date').textContent = new Date(post.date).toLocaleDateString('de-DE', {day:'numeric', month:'long', year:'numeric'});
+      
+      const w = post.content.replace(/<[^>]+>/g, '').split(' ').length;
+      document.getElementById('ph-read').textContent = Math.max(1, Math.round(w / 200)) + ' Min. Lesezeit';
+      document.getElementById('ph-letter').textContent = post.title.charAt(0).toUpperCase();
+      document.getElementById('article-body').innerHTML = post.content;
+      document.getElementById('post-hero').style.display = 'block';
+      
+      // Recent posts (excluding current)
+      const rp = document.getElementById('recent-posts');
+      rp.innerHTML = '';
+      sitePosts.slice().reverse().slice(0, 6).forEach(p => {
+        if (p.id == id) return;
+        rp.innerHTML += `<div class="ri">
+          <div class="ri-type">${p.category || 'Allgemein'}</div>
+          <a class="ri-title" href="post.html?id=${p.id}">${p.title}</a>
+          <div class="ri-meta">${p.author || 'Redaktion'} · ${new Date(p.date).toLocaleDateString('de-DE')}</div>
+        </div>`;
+      });
+    } else {
+      document.getElementById('not-found').style.display = 'block';
+    }
+  } catch (e) {
+    console.error('Error loading post:', e);
+    document.getElementById('not-found').style.display = 'block';
+  }
+}
+
+// Load the post
+loadPost();
+</script>
+</body>
+</html>
