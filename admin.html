@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — WissenWelle</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Spectral:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#F2F6F8;--white:#FFF;--card:#FFF;--ink:#0E2229;--mid:#163040;--border:#D8E5EA;--border2:#B8D0D8;--teal:#0A7C78;--teal2:#065A56;--teal-lt:#E0F5F4;--teal-mid:#5BBBB8;--rose:#D4456C;--muted:#4A6878;--light:#88A8B8;--warm:#E8F0F4;--warm2:#DCE8EE;--green:#166534;--green-lt:#DCFCE7}
+body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased}
+.login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--teal2),#0E3A40)}
+.login-box{background:var(--white);padding:52px 44px;width:100%;max-width:420px;border-radius:16px;position:relative;z-index:10;box-shadow:0 32px 80px rgba(0,0,0,0.25);border-top:3px solid var(--teal)}
+.login-logo{display:flex;align-items:center;gap:12px;margin-bottom:24px}
+.ll-mark{width:44px;height:44px;background:linear-gradient(135deg,var(--teal),#4A9FBF);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Spectral',serif;font-size:19px;font-weight:700;color:#fff;font-style:italic;flex-shrink:0}
+.ll-name{font-family:'Spectral',serif;font-size:26px;font-weight:700;color:var(--ink);letter-spacing:-0.3px}
+.ll-name span{color:var(--teal);font-style:italic}
+.login-sub{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:36px;font-weight:700}
+.field{margin-bottom:18px}
+.field label{display:block;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.field input{width:100%;padding:13px 16px;border:1.5px solid var(--border);font-size:15px;font-family:'Manrope',sans-serif;outline:none;background:var(--warm);color:var(--ink);transition:border-color .2s;border-radius:8px;position:relative;z-index:1;pointer-events:auto}
+.field input:focus{border-color:var(--teal);background:var(--white);box-shadow:0 0 0 3px rgba(10,124,120,0.08)}
+.field input::placeholder{color:var(--light)}
+.login-btn{width:100%;padding:14px;background:var(--teal);color:#fff;border:none;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;font-family:'Manrope',sans-serif;transition:background .2s;border-radius:8px;position:relative;z-index:1;pointer-events:auto}
+.login-btn:hover{background:var(--teal2)}
+.login-err{color:var(--rose);font-size:13px;margin-top:12px;display:none;font-weight:700;text-align:center}
+.admin-wrap{display:none;min-height:100vh;background:var(--bg)}
+.admin-header{background:var(--white);height:62px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;position:sticky;top:0;z-index:100;border-bottom:1px solid var(--border);box-shadow:0 2px 12px rgba(10,124,120,0.06);flex-wrap:wrap;gap:8px}
+.al{display:flex;align-items:center;gap:10px}
+.al-mark{width:34px;height:34px;background:linear-gradient(135deg,var(--teal),#4A9FBF);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Spectral',serif;font-size:15px;font-weight:700;color:#fff;font-style:italic;flex-shrink:0}
+.al-name{font-family:'Spectral',serif;font-size:20px;font-weight:700;color:var(--ink)}
+.al-name span{color:var(--teal);font-style:italic}
+.admin-nav{display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+.admin-nav button{background:var(--warm);border:1.5px solid var(--border);color:var(--muted);padding:7px 14px;font-size:11px;font-weight:700;letter-spacing:0.5px;cursor:pointer;font-family:'Manrope',sans-serif;transition:all .2s;border-radius:8px}
+.admin-nav button:hover,.admin-nav button.active{background:var(--teal);border-color:var(--teal);color:#fff}
+.logout-btn{background:transparent;border:none;color:var(--light);font-size:11px;cursor:pointer;font-family:'Manrope',sans-serif;padding:7px 10px;font-weight:700;transition:color .2s;margin-left:4px}
+.logout-btn:hover{color:var(--ink)}
+.view-btn{display:inline-flex;align-items:center;gap:5px;background:var(--warm);border:1.5px solid var(--border);color:var(--muted);padding:7px 14px;text-decoration:none;font-size:11px;font-weight:700;transition:all .2s;margin-left:3px;border-radius:8px}
+.view-btn:hover{background:var(--ink);border-color:var(--ink);color:#fff}
+.admin-body{max-width:1100px;margin:0 auto;padding:28px 24px}
+.panel{display:none}.panel.active{display:block}
+.panel-title{font-family:'Spectral',serif;font-size:38px;font-weight:700;color:var(--ink);margin-bottom:22px;letter-spacing:-1px}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:22px;position:relative;overflow:hidden;transition:all .2s}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,var(--teal),var(--teal-mid));border-radius:12px 12px 0 0}
+.stat-card:hover{box-shadow:0 8px 24px rgba(10,124,120,0.1);border-color:var(--teal-mid)}
+.stat-num{font-family:'Spectral',serif;font-size:48px;font-weight:700;color:var(--teal);line-height:1;margin-bottom:3px;letter-spacing:-2px}
+.stat-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+.stat-icon{position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:26px;opacity:0.15}
+.dash-welcome{background:linear-gradient(135deg,var(--teal2),#0E3A40);padding:48px;border-radius:14px;position:relative;overflow:hidden}
+.dash-welcome::after{content:'〜';position:absolute;right:20px;bottom:-20px;font-family:'Spectral',serif;font-size:140px;font-weight:700;color:rgba(255,255,255,0.05);font-style:italic;line-height:1}
+.dw-kicker{font-size:10px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--teal-mid);margin-bottom:8px}
+.dw-title{font-family:'Spectral',serif;font-size:36px;font-weight:700;color:#fff;margin-bottom:10px;letter-spacing:-1px;line-height:1.1;position:relative}
+.dw-sub{font-size:14px;color:rgba(255,255,255,0.35);margin-bottom:22px;font-weight:300}
+.dw-btn{display:inline-flex;align-items:center;gap:8px;background:var(--teal-mid);color:var(--ink);padding:12px 24px;font-size:11px;font-weight:700;letter-spacing:0.5px;cursor:pointer;font-family:'Manrope',sans-serif;border:none;transition:opacity .2s;border-radius:10px}
+.dw-btn:hover{opacity:0.85}
+.editor-grid{display:grid;grid-template-columns:1fr 280px;gap:14px}
+.editor-main{background:var(--card);padding:30px;border:1px solid var(--border);border-radius:12px;border-top:3px solid var(--teal)}
+.editor-side{display:flex;flex-direction:column;gap:10px}
+.side-box{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px}
+.side-box h3{font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.title-input{font-family:'Spectral',serif;font-size:32px;font-weight:700;border:none;background:transparent;padding:0;width:100%;outline:none;margin-bottom:8px;color:var(--ink);letter-spacing:-0.5px;line-height:1.15}
+.title-input::placeholder{color:#D8E5EA}
+.title-sep{height:1px;background:var(--border);margin-bottom:3px}
+.title-teal{height:2px;background:linear-gradient(to right,var(--teal),var(--teal-mid),transparent);border-radius:2px;margin-bottom:20px}
+.form-field{margin-bottom:11px}
+.form-field label{display:block;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.form-field input,.form-field select,.form-field textarea{width:100%;padding:10px 13px;border:1.5px solid var(--border);font-size:13px;font-family:'Manrope',sans-serif;outline:none;transition:border-color .2s;background:var(--warm);color:var(--ink);border-radius:8px}
+.form-field input:focus,.form-field select:focus,.form-field textarea:focus{border-color:var(--teal);background:var(--white);box-shadow:0 0 0 3px rgba(10,124,120,0.06)}
+#post-content{min-height:380px;resize:vertical;line-height:1.8;font-size:13px;font-weight:300}
+.toolbar{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px}
+.toolbar button{background:var(--warm2);border:1.5px solid var(--border);padding:6px 11px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Manrope',sans-serif;transition:all .2s;color:var(--muted);border-radius:6px}
+.toolbar button:hover{background:var(--teal);color:#fff;border-color:var(--teal)}
+.publish-btn{width:100%;padding:13px;background:var(--teal);color:#fff;border:none;font-size:11px;font-weight:700;letter-spacing:0.5px;cursor:pointer;font-family:'Manrope',sans-serif;margin-bottom:7px;transition:background .2s;border-radius:10px}
+.publish-btn:hover{background:var(--teal2)}
+.cancel-btn{width:100%;padding:10px;background:transparent;color:var(--muted);border:1.5px solid var(--border);font-size:10px;font-weight:700;cursor:pointer;font-family:'Manrope',sans-serif;letter-spacing:1px;text-transform:uppercase;transition:all .2s;border-radius:10px}
+.cancel-btn:hover{border-color:var(--teal);color:var(--teal)}
+.success-msg{background:var(--green-lt);color:var(--green);border:1px solid rgba(22,101,52,0.2);padding:10px;font-size:11px;font-weight:700;margin-top:8px;display:none;text-align:center;letter-spacing:1.5px;text-transform:uppercase;border-radius:8px}
+.posts-table{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.posts-table-header{display:grid;grid-template-columns:1fr 130px 120px 110px;padding:10px 18px;background:var(--warm);color:var(--muted);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;border-bottom:1px solid var(--border)}
+.post-row{display:grid;grid-template-columns:1fr 130px 120px 110px;padding:15px 18px;border-bottom:1px solid var(--border);align-items:center;transition:background .15s}
+.post-row:hover{background:var(--warm)}
+.post-row:last-child{border-bottom:none}
+.post-row-title{font-family:'Spectral',serif;font-size:16px;font-weight:700;color:var(--ink);margin-bottom:2px;line-height:1.2}
+.post-row-excerpt{font-size:12px;color:var(--light);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:370px}
+.post-row-date{font-size:12px;color:var(--muted)}
+.post-row-cat{font-size:9px;background:var(--teal-lt);color:var(--teal);padding:4px 9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border:1px solid rgba(10,124,120,0.2);display:inline-block;border-radius:100px}
+.row-actions{display:flex;gap:5px}
+.edit-btn{background:var(--warm2);color:var(--ink);border:1.5px solid var(--border2);padding:5px 10px;font-size:10px;font-weight:700;cursor:pointer;font-family:'Manrope',sans-serif;transition:all .2s;border-radius:6px}
+.edit-btn:hover{background:var(--teal);color:#fff;border-color:var(--teal)}
+.del-btn{background:#FEF2F2;color:#DC2626;border:1.5px solid #FECACA;padding:5px 10px;font-size:10px;font-weight:700;cursor:pointer;font-family:'Manrope',sans-serif;transition:all .2s;border-radius:6px}
+.del-btn:hover{background:#DC2626;color:#fff;border-color:#DC2626}
+.empty-posts{text-align:center;padding:56px;color:var(--muted);font-size:14px}
+.preview-box{background:var(--warm2);border:1.5px solid var(--border);padding:12px;border-radius:8px}
+.preview-title-txt{font-family:'Spectral',serif;font-size:18px;font-weight:700;color:var(--ink);margin-bottom:4px;line-height:1.2}
+.preview-exc{font-size:12px;color:var(--muted);line-height:1.5}
+.gist-config{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:28px;max-width:800px;margin:0 auto}
+.gist-field{margin-bottom:20px}
+.gist-field label{display:block;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.gist-field input{width:100%;padding:12px 16px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:'Manrope',sans-serif}
+.gist-field input:focus{border-color:var(--teal);outline:none}
+.gist-note{background:var(--warm2);padding:16px;margin:24px 0;font-size:13px;color:var(--muted);border-left:3px solid var(--teal);border-radius:0 8px 8px 0}
+.gist-buttons{display:flex;gap:10px;margin-top:24px;flex-wrap:wrap}
+.gist-btn{background:var(--teal);color:#fff;border:none;padding:12px 24px;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:background .2s;border-radius:8px}
+.gist-btn:hover{background:var(--teal2)}
+.gist-btn.secondary{background:var(--warm2);color:var(--ink);border:1px solid var(--border)}
+.gist-btn.secondary:hover{background:var(--border);border-color:var(--muted)}
+.gist-status{margin-top:16px;padding:12px;border-radius:8px;display:none}
+.gist-status.success{background:var(--green-lt);color:var(--green);display:block}
+.gist-status.error{background:#FEF2F2;color:#DC2626;display:block}
+@media(max-width:900px){.stats-row{grid-template-columns:1fr 1fr}.editor-grid{grid-template-columns:1fr}.posts-table-header,.post-row{grid-template-columns:1fr 110px 100px}}
+@media(max-width:600px){.admin-header{height:auto;padding:12px 16px;gap:12px}.stats-row{grid-template-columns:1fr 1fr}.admin-body{padding:16px 14px}.posts-table-header,.post-row{grid-template-columns:1fr auto}}
+</style>
+</head>
+<body>
+<div class="login-screen" id="login-screen">
+  <div class="login-box">
+    <div class="login-logo"><div class="ll-mark">W</div><div class="ll-name">Wissen<span>Welle</span></div></div>
+    <div class="login-sub">Redaktion · Admin</div>
+    <div class="field"><label>Passwort</label><input type="password" id="pw-input" placeholder="Passwort eingeben..." onkeydown="if(event.key==='Enter')doLogin()"></div>
+    <button class="login-btn" onclick="doLogin()">Anmelden →</button>
+    <div class="login-err" id="login-err">⚠ Falsches Passwort</div>
+  </div>
+</div>
+<div class="admin-wrap" id="admin-panel">
+  <div class="admin-header">
+    <div class="al"><div class="al-mark">W</div><div class="al-name">Wissen<span>Welle</span></div></div>
+    <div class="admin-nav">
+      <button class="active" onclick="showPanel('dashboard',this)">Dashboard</button>
+      <button onclick="showPanel('new-post',this)">✏ Neuer Artikel</button>
+      <button onclick="showPanel('all-posts',this)">📋 Alle Artikel</button>
+      <button onclick="showPanel('gist-config',this)">⚙ Gist Config</button>
+      <a href="index.html" target="_blank" class="view-btn">🌐 Website</a>
+      <button class="logout-btn" onclick="logout()">Abmelden</button>
+    </div>
+  </div>
+  <div class="admin-body">
+    <div class="panel active" id="panel-dashboard">
+      <div class="panel-title">Dashboard</div>
+      <div class="stats-row">
+        <div class="stat-card"><div class="stat-icon">📝</div><div class="stat-num" id="stat-total">0</div><div class="stat-label">Artikel gesamt</div></div>
+        <div class="stat-card"><div class="stat-icon">📅</div><div class="stat-num" id="stat-today">0</div><div class="stat-label">Heute publiziert</div></div>
+        <div class="stat-card"><div class="stat-icon">🗂</div><div class="stat-num" id="stat-cats">0</div><div class="stat-label">Kategorien aktiv</div></div>
+        <div class="stat-card"><div class="stat-icon">📖</div><div class="stat-num" id="stat-words">—</div><div class="stat-label">Ø Wörter</div></div>
+      </div>
+      <div class="dash-welcome">
+        <div class="dw-kicker">WissenWelle Redaktion</div>
+        <div class="dw-title">Bereit für deinen nächsten Artikel?</div>
+        <div class="dw-sub">Das deutsche Magazin-Blog — täglich neue Wellen an Wissen, Kultur und Gesellschaft.</div>
+        <button class="dw-btn" onclick="showPanel('new-post',document.querySelector('.admin-nav button:nth-child(2)'))">Neuen Artikel schreiben →</button>
+      </div>
+    </div>
+    <div class="panel" id="panel-new-post">
+      <div class="panel-title" id="editor-mode-title">Neuer Artikel</div>
+      <div class="editor-grid">
+        <div class="editor-main">
+          <input class="title-input" type="text" id="post-title" placeholder="Artikeltitel eingeben...">
+          <div class="title-sep"></div><div class="title-teal"></div>
+          <div class="toolbar">
+            <button onclick="fmt('bold')"><b>B</b></button><button onclick="fmt('italic')"><i>I</i></button>
+            <button onclick="wrapTag('h2')">H2</button><button onclick="wrapTag('h3')">H3</button>
+            <button onclick="wrapTag('blockquote')">❝</button><button onclick="insertLink()">🔗</button>
+            <button onclick="wrapTag('ul')">Liste</button><button onclick="wrapTag('p')">¶</button>
+          </div>
+          <div class="form-field"><textarea id="post-content" placeholder="Artikelinhalt hier eingeben... HTML wird unterstützt.&#10;&#10;&lt;p&gt;Text...&lt;/p&gt;&#10;&lt;a href=&quot;https://example.com&quot;&gt;Linktext&lt;/a&gt;"></textarea></div>
+        </div>
+        <div class="editor-side">
+          <div class="side-box"><h3>Veröffentlichen</h3>
+            <button class="publish-btn" onclick="publishPost()">🚀 Veröffentlichen</button>
+            <button class="cancel-btn" onclick="clearEditor()">✖ Zurücksetzen</button>
+            <div class="success-msg" id="success-msg">✅ VERÖFFENTLICHT</div>
+          </div>
+          <div class="side-box"><h3>Details</h3>
+            <div class="form-field"><label>Kategorie</label>
+              <select id="post-cat"><option>Politik</option><option>Wirtschaft</option><option>Gesellschaft</option><option>Kultur</option><option>Technik</option><option>Wissen</option><option>Sport</option><option>Lifestyle</option><option>Reise</option><option>Gesundheit</option><option>Bildung</option><option>Allgemein</option></select>
+            </div>
+            <div class="form-field"><label>Autor</label><input type="text" id="post-author" value="WissenWelle Redaktion"></div>
+          </div>
+          <div class="side-box"><h3>Vorschau</h3>
+            <div class="preview-box">
+              <div class="preview-title-txt" id="preview-title">Titel...</div>
+              <div class="preview-exc" id="preview-excerpt">Inhalt...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="panel" id="panel-all-posts">
+      <div class="panel-title">Alle Artikel</div>
+      <div class="posts-table">
+        <div class="posts-table-header"><div>Titel</div><div>Datum</div><div>Kategorie</div><div>Aktionen</div></div>
+        <div id="posts-list"></div>
+      </div>
+    </div>
+    <div class="panel" id="panel-gist-config">
+      <div class="panel-title">Gist Konfiguration</div>
+      <div class="gist-config">
+        <div class="gist-note">
+          <strong>📋 Gist ID:</strong> 42ea11087f40fdba423f8eb0f575ac96<br>
+          <strong>🏷️ Site Name:</strong> wissenwelle<br>
+          <small>Alle Artikel werden mit diesem Site-Namen gekennzeichnet.</small>
+        </div>
+        
+        <div class="gist-field">
+          <label>GitHub Token</label>
+          <input type="password" id="github-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+        </div>
+        
+        <div class="gist-field">
+          <label>GitHub Benutzername</label>
+          <input type="text" id="github-username" value="Hamzamain-spec" placeholder="GitHub Username">
+        </div>
+        
+        <div class="gist-buttons">
+          <button class="gist-btn" onclick="testGistConnection()">🔌 Verbindung testen</button>
+          <button class="gist-btn secondary" onclick="saveGistConfig()">💾 Config speichern</button>
+          <button class="gist-btn secondary" onclick="migrateLocalToGist()">⬆️ Lokale zu Gist migrieren</button>
+        </div>
+        
+        <div id="gist-status" class="gist-status"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+// Constants
+const PASS = 'germanadmin00#hamzauthority1';
+const GIST_ID = '42ea11087f40fdba423f8eb0f575ac96';
+const SITE_NAME = 'wissenwelle';
+const CONFIG_KEY = 'gist_config_wissenwelle';
+
+let editingId = null;
+let gistConfig = null;
+
+// Load saved config on startup
+try {
+  const saved = localStorage.getItem(CONFIG_KEY);
+  if (saved) {
+    gistConfig = JSON.parse(saved);
+    document.getElementById('github-token').value = gistConfig.token || '';
+    document.getElementById('github-username').value = gistConfig.username || 'Hamzamain-spec';
+  }
+} catch (e) {}
+
+// Login functions
+function doLogin() {
+  if (document.getElementById('pw-input').value === PASS) {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('admin-panel').style.display = 'block';
+    loadDashboard();
+  } else {
+    document.getElementById('login-err').style.display = 'block';
+    document.getElementById('pw-input').value = '';
+  }
+}
+
+function logout() {
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('admin-panel').style.display = 'none';
+  document.getElementById('pw-input').value = '';
+}
+
+function showPanel(name, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.admin-nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+  if (btn) btn.classList.add('active');
+  
+  if (name === 'all-posts') loadPostsList();
+  if (name === 'dashboard') loadDashboard();
+  if (name === 'new-post') {
+    editingId = null;
+    clearEditor();
+  }
+  if (name === 'gist-config') {
+    document.getElementById('github-token').value = gistConfig?.token || '';
+    document.getElementById('github-username').value = gistConfig?.username || 'Hamzamain-spec';
+  }
+}
+
+// Gist API Functions
+async function getPostsFromGist() {
+  const rawUrl = `https://gist.githubusercontent.com/Hamzamain-spec/${GIST_ID}/raw/posts.json`;
+  try {
+    const response = await fetch(rawUrl);
+    if (!response.ok) return [];
+    const data = await response.json();
+    return Array.isArray(data) ? data : [];
+  } catch (e) {
+    console.error('Error fetching from Gist:', e);
+    return [];
+  }
+}
+
+async function savePostsToGist(posts) {
+  if (!gistConfig?.token) {
+    showGistStatus('Bitte zuerst GitHub Token speichern', 'error');
+    return false;
+  }
+
+  // First get the current gist to get the file SHA
+  const gistResponse = await fetch(`https://api.github.com/gists/${GIST_ID}`, {
+    headers: {
+      'Authorization': `token ${gistConfig.token}`,
+      'Accept': 'application/vnd.github.v3+json'
+    }
+  });
+
+  if (!gistResponse.ok) {
+    showGistStatus('Fehler beim Abrufen der Gist-Info', 'error');
+    return false;
+  }
+
+  const gistData = await gistResponse.json();
+  const currentFile = gistData.files['posts.json'];
+  const sha = currentFile ? currentFile.sha : null;
+
+  // Update the gist
+  const updateResponse = await fetch(`https://api.github.com/gists/${GIST_ID}`, {
+    method: 'PATCH',
+    headers: {
+      'Authorization': `token ${gistConfig.token}`,
+      'Accept': 'application/vnd.github.v3+json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      files: {
+        'posts.json': {
+          content: JSON.stringify(posts, null, 2),
+          ...(sha && { sha })
+        }
+      }
+    })
+  });
+
+  if (updateResponse.ok) {
+    showGistStatus('✅ Erfolgreich zu Gist gespeichert!', 'success');
+    return true;
+  } else {
+    const error = await updateResponse.json();
+    showGistStatus(`Fehler: ${error.message || 'Unbekannter Fehler'}`, 'error');
+    return false;
+  }
+}
+
+function showGistStatus(message, type) {
+  const statusDiv = document.getElementById('gist-status');
+  statusDiv.textContent = message;
+  statusDiv.className = `gist-status ${type}`;
+  setTimeout(() => {
+    statusDiv.style.display = 'none';
+  }, 5000);
+}
+
+async function testGistConnection() {
+  const token = document.getElementById('github-token').value;
+  const username = document.getElementById('github-username').value;
+  
+  if (!token) {
+    showGistStatus('Bitte GitHub Token eingeben', 'error');
+    return;
+  }
+
+  try {
+    const response = await fetch('https://api.github.com/user', {
+      headers: {
+        'Authorization': `token ${token}`,
+        'Accept': 'application/vnd.github.v3+json'
+      }
+    });
+
+    if (response.ok) {
+      const user = await response.json();
+      showGistStatus(`✅ Verbunden als ${user.login}`, 'success');
+    } else {
+      showGistStatus('❌ Ungültiger Token', 'error');
+    }
+  } catch (e) {
+    showGistStatus('❌ Verbindungsfehler', 'error');
+  }
+}
+
+function saveGistConfig() {
+  const token = document.getElementById('github-token').value;
+  const username = document.getElementById('github-username').value;
+  
+  gistConfig = { token, username };
+  localStorage.setItem(CONFIG_KEY, JSON.stringify(gistConfig));
+  showGistStatus('✅ Konfiguration gespeichert', 'success');
+}
+
+async function migrateLocalToGist() {
+  const localPosts = getLocalPosts();
+  if (!localPosts.length) {
+    showGistStatus('Keine lokalen Artikel zum Migrieren', 'error');
+    return;
+  }
+
+  // Add site name to local posts
+  const postsWithSite = localPosts.map(post => ({
+    ...post,
+    site: SITE_NAME
+  }));
+
+  const gistPosts = await getPostsFromGist();
+  
+  // Filter out any existing posts from this site (to avoid duplicates)
+  const otherPosts = gistPosts.filter(p => p.site !== SITE_NAME);
+  
+  // Combine and save
+  const allPosts = [...otherPosts, ...postsWithSite];
+  const success = await savePostsToGist(allPosts);
+  
+  if (success) {
+    showGistStatus(`✅ ${localPosts.length} Artikel migriert`, 'success');
+  }
+}
+
+// Post management functions (modified for Gist)
+async function getPosts() {
+  const gistPosts = await getPostsFromGist();
+  return gistPosts.filter(p => p.site === SITE_NAME);
+}
+
+function getLocalPosts() {
+  return JSON.parse(localStorage.getItem('db_posts') || '[]');
+}
+
+async function savePosts(posts) {
+  // First add site name to all posts
+  const postsWithSite = posts.map(post => ({
+    ...post,
+    site: SITE_NAME
+  }));
+
+  // Get current all posts from gist
+  const allGistPosts = await getPostsFromGist();
+  
+  // Remove this site's posts and add the new ones
+  const otherPosts = allGistPosts.filter(p => p.site !== SITE_NAME);
+  const updatedAllPosts = [...otherPosts, ...postsWithSite];
+  
+  return await savePostsToGist(updatedAllPosts);
+}
+
+async function publishPost() {
+  const title = document.getElementById('post-title').value.trim();
+  const content = document.getElementById('post-content').value.trim();
+  
+  if (!title || !content) {
+    alert('Bitte Titel und Inhalt eingeben!');
+    return;
+  }
+
+  const posts = await getPosts();
+  
+  if (editingId) {
+    const idx = posts.findIndex(p => p.id == editingId);
+    if (idx > -1) {
+      posts[idx].title = title;
+      posts[idx].content = content;
+      posts[idx].category = document.getElementById('post-cat').value;
+      posts[idx].author = document.getElementById('post-author').value;
+    }
+  } else {
+    posts.push({
+      id: Date.now(),
+      title,
+      content,
+      category: document.getElementById('post-cat').value,
+      author: document.getElementById('post-author').value || 'Redaktion',
+      date: new Date().toISOString(),
+      site: SITE_NAME
+    });
+  }
+
+  const success = await savePosts(posts);
+  
+  if (success) {
+    const msg = document.getElementById('success-msg');
+    msg.textContent = editingId ? '✅ AKTUALISIERT' : '✅ VERÖFFENTLICHT';
+    msg.style.display = 'block';
+    setTimeout(() => {
+      msg.style.display = 'none';
+      clearEditor();
+    }, 2000);
+    editingId = null;
+  }
+}
+
+function clearEditor() {
+  document.getElementById('post-title').value = '';
+  document.getElementById('post-content').value = '';
+  document.getElementById('post-cat').value = 'Politik';
+  document.getElementById('post-author').value = 'WissenWelle Redaktion';
+  document.getElementById('preview-title').textContent = 'Titel...';
+  document.getElementById('preview-excerpt').textContent = 'Inhalt...';
+  document.getElementById('editor-mode-title').textContent = 'Neuer Artikel';
+  editingId = null;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('post-title').addEventListener('input', e => {
+    document.getElementById('preview-title').textContent = e.target.value || 'Titel...';
+  });
+  document.getElementById('post-content').addEventListener('input', e => {
+    const t = e.target.value.replace(/<[^>]+>/g, '').substring(0, 90);
+    document.getElementById('preview-excerpt').textContent = t ? t + '...' : 'Inhalt...';
+  });
+});
+
+function fmt(cmd) {
+  const ta = document.getElementById('post-content');
+  const s = ta.selectionStart;
+  const e = ta.selectionEnd;
+  const sel = ta.value.substring(s, e) || 'Text';
+  const tag = cmd === 'bold' ? 'strong' : 'em';
+  ta.value = ta.value.substring(0, s) + `<${tag}>${sel}</${tag}>` + ta.value.substring(e);
+}
+
+function wrapTag(tag) {
+  const ta = document.getElementById('post-content');
+  const s = ta.selectionStart;
+  const e = ta.selectionEnd;
+  const sel = ta.value.substring(s, e) || 'Text hier';
+  const w = tag === 'ul' ? `<ul>\n  <li>${sel}</li>\n</ul>` : `<${tag}>${sel}</${tag}>`;
+  ta.value = ta.value.substring(0, s) + w + ta.value.substring(e);
+}
+
+function insertLink() {
+  const url = prompt('URL:');
+  if (!url) return;
+  const ta = document.getElementById('post-content');
+  const s = ta.selectionStart;
+  const e = ta.selectionEnd;
+  const sel = ta.value.substring(s, e) || 'Linktext';
+  ta.value = ta.value.substring(0, s) + `<a href="${url}">${sel}</a>` + ta.value.substring(e);
+}
+
+async function loadPostsList() {
+  const posts = await getPosts();
+  const el = document.getElementById('posts-list');
+  
+  if (!posts.length) {
+    el.innerHTML = '<div class="empty-posts">Noch keine Artikel vorhanden.</div>';
+    return;
+  }
+
+  el.innerHTML = posts.slice().reverse().map(p => {
+    const date = new Date(p.date).toLocaleDateString('de-DE');
+    const excerpt = p.content.replace(/<[^>]+>/g, '').substring(0, 55);
+    return `<div class="post-row">
+      <div>
+        <div class="post-row-title">${p.title}</div>
+        <div class="post-row-excerpt">${excerpt}...</div>
+      </div>
+      <div class="post-row-date">${date}</div>
+      <div><span class="post-row-cat">${p.category || 'Allgemein'}</span></div>
+      <div class="row-actions">
+        <button class="edit-btn" onclick="editPost(${p.id})">✏</button>
+        <button class="del-btn" onclick="deletePost(${p.id})">✕</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function editPost(id) {
+  const posts = await getPosts();
+  const post = posts.find(p => p.id == id);
+  if (!post) return;
+  
+  editingId = id;
+  document.getElementById('post-title').value = post.title;
+  document.getElementById('post-content').value = post.content;
+  document.getElementById('post-cat').value = post.category || 'Politik';
+  document.getElementById('post-author').value = post.author || 'Redaktion';
+  document.getElementById('editor-mode-title').textContent = 'Artikel bearbeiten';
+  document.getElementById('preview-title').textContent = post.title;
+  showPanel('new-post', document.querySelector('.admin-nav button:nth-child(2)'));
+}
+
+async function deletePost(id) {
+  if (!confirm('Löschen?')) return;
+  
+  const posts = await getPosts();
+  const updatedPosts = posts.filter(p => p.id != id);
+  await savePosts(updatedPosts);
+  loadPostsList();
+  loadDashboard();
+}
+
+async function loadDashboard() {
+  const posts = await getPosts();
+  
+  document.getElementById('stat-total').textContent = posts.length;
+  
+  const today = new Date().toDateString();
+  document.getElementById('stat-today').textContent = posts.filter(p => 
+    new Date(p.date).toDateString() === today
+  ).length;
+  
+  document.getElementById('stat-cats').textContent = new Set(posts.map(p => p.category)).size;
+  
+  if (posts.length) {
+    const avg = Math.round(posts.reduce((a, p) => 
+      a + p.content.replace(/<[^>]+>/g, '').split(' ').length, 0
+    ) / posts.length);
+    document.getElementById('stat-words').textContent = avg;
+  }
+}
+</script>
+</body>
+</html>
