@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://wissenwelle.ulfschoeneberg.de/</loc>
+    <loc>https://wissenwelle.netlify.app/</loc>
+    <lastmod>2026-04-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://wissenwelle.ulfschoeneberg.de/#/post/1773435727710</loc>
-    <lastmod>2026-03-13</lastmod>
+    <loc>https://wissenwelle.netlify.app/post.html?id=post-1775654198511</loc>
+    <lastmod>2026-04-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://wissenwelle.ulfschoeneberg.de/#/post/post-1775654198511</loc>
-    <lastmod>2026-04-08</lastmod>
+    <loc>https://wissenwelle.netlify.app/post.html?id=1773435727710</loc>
+    <lastmod>2026-03-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
